@@ -1,0 +1,96 @@
+plugins {
+    id 'java'
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    group = 'kr.co.ehc0104.rag'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '17'
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+
+    configurations {
+        annotationProcessor
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.annotationProcessorPath = configurations.annotationProcessor
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            mavenCentral()
+        }
+    }
+
+
+}
+
+project(':common') {
+}
+
+project(':semantic-search') {
+    dependencies {
+        implementation project(':common')
+    }
+}
+
+project(':ollama') {
+    dependencies {
+        implementation project(':common')
+        implementation project(':semantic-search')
+    }
+}
+
+project(':nlp-client') {
+    dependencies {
+        implementation project(':common')
+    }
+}
+
+
+project(':rag-core') {
+    dependencies {
+        implementation project(':common')
+        implementation project(':semantic-search')
+        implementation project(':ollama')
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}

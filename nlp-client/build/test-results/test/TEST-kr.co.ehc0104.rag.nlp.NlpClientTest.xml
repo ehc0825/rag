@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="kr.co.ehc0104.rag.nlp.NlpClientTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-12-09T06:42:00" hostname="ihyeonchang-ui-MacBookPro.local" time="40.132">
+  <properties/>
+  <testcase name="reRank 요청 테스트" classname="kr.co.ehc0104.rag.nlp.NlpClientTest" time="0.446"/>
+  <testcase name="embedding 요청 테스트" classname="kr.co.ehc0104.rag.nlp.NlpClientTest" time="0.032"/>
+  <testcase name="문장 클러스터링 테스트" classname="kr.co.ehc0104.rag.nlp.NlpClientTest" time="1.778"/>
+  <testcase name="summary 요청 테스트" classname="kr.co.ehc0104.rag.nlp.NlpClientTest" time="36.782"/>
+  <testcase name="문장 청킹 테스트" classname="kr.co.ehc0104.rag.nlp.NlpClientTest" time="1.092"/>
+  <system-out><![CDATA[summarizeResponse.result() = 이순신 장군의 탄생은 오늘날 대한민국의 역사에 큰 영향을 미쳤다. 그의 행적과 위상은 무엇일까? BBC 코리아가 이를 짚어본 적은 여러 차례를 놓고 있을 것으로 예상된다. 이에 대해 이 흥미로운 내용을 들어 .. ( 국내에서 최근 발표된 문재인 대통령의 취임 )
+이순신은 무엇을 했나요?
+이순신은 무신이다
+이순신은 조선 중기의 무신이다
+이순신은 조선 후기의 무신이다
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
