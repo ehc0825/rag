@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class NlpClient implements Closeable {
+public class NlpClient {
 
     private final String host;
     private final int port;
     private final Map<String, String> headers = new HashMap<>();
-    private HttpURLConnection httpURLConnection;
 
 
     /**
@@ -173,34 +172,34 @@ public class NlpClient implements Closeable {
     ) throws IOException {
         try {
             URL url = new URL(String.format("http://%s:%d%s", host, port, request.url()));
-            this.httpURLConnection = (HttpURLConnection) url.openConnection();
-            this.httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
             if (!this.headers.isEmpty()) {
                 for (Map.Entry<String, String> header : this.headers.entrySet()) {
-                    this.httpURLConnection.setRequestProperty(header.getKey(), header.getValue());
+                    httpURLConnection.setRequestProperty(header.getKey(), header.getValue());
                 }
             }
 
-            this.httpURLConnection.setUseCaches(false);
-            this.httpURLConnection.setRequestMethod(request.requestMethod());
+            httpURLConnection.setUseCaches(false);
+            httpURLConnection.setRequestMethod(request.requestMethod());
 
             // GET 요청이면 setDoOutput(false) 설정
-            this.httpURLConnection.setDoOutput(!"GET".equalsIgnoreCase(request.requestMethod()));
+            httpURLConnection.setDoOutput(!"GET".equalsIgnoreCase(request.requestMethod()));
             if (customizeHttpURLConnection == null) {
                 if (!"GET".equalsIgnoreCase(request.requestMethod())) {
-                    DataOutputStream dataOutputStream = new DataOutputStream(this.httpURLConnection.getOutputStream());
+                    DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
                     dataOutputStream.write(request.toJsonString().getBytes(StandardCharsets.UTF_8));
                     dataOutputStream.close();
                 }
             } else {
-                customizeHttpURLConnection.accept(this.httpURLConnection);
+                customizeHttpURLConnection.accept(httpURLConnection);
             }
-            int responseCode = this.httpURLConnection.getResponseCode();
+            int responseCode = httpURLConnection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new IOException("Server returned non-OK status: " + responseCode);
             }
 
-            return this.httpURLConnection.getInputStream();
+            return httpURLConnection.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
@@ -211,10 +210,4 @@ public class NlpClient implements Closeable {
         return this.getInputStream(request, null);
     }
 
-    @Override
-    public void close() throws IOException {
-        if (null != httpURLConnection) {
-            httpURLConnection.disconnect();
-        }
-    }
 }
