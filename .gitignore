@@ -1,0 +1,47 @@
+# 프로젝트 제외 경로
+# 모든 것을 제외
+/**
+
+# ! 필수 파일 포함
+!/.gitignore
+!/build.gradle
+!/README.md
+!/gradlew
+!/gradlew.bat
+!/settings.gradle
+!/gradle/wrapper/gradle-wrapper.jar
+!/gradle/wrapper/gradle-wrapper.properties
+
+
+# 모듈 포함
+!/common/
+!/common/src/
+!/common/src/**
+!/common/build.gradle
+!/common/README.md
+
+!/ollama/
+!/ollama/src/
+!/ollama/src/**
+!/ollama/build.gradle
+!/ollama/README.md
+
+
+!/semantic-search/
+!/semantic-search/src/
+!/semantic-search/src/**
+!/semantic-search/build.gradle
+!/semantic-search/README.md
+
+!/rag-core/
+!/rag-core/src/
+!/rag-core/src/**
+!/rag-core/build.gradle
+!/rag-core/README.md
+
+
+!/nlp-client/
+!/nlp-client/src/
+!/nlp-client/src/**
+!/nlp-client/build.gradle
+!/nlp-client/README.md
